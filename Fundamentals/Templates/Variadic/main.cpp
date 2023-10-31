@@ -189,20 +189,45 @@ public:
     VariadicTemplatesExample(Arguments &&...params)
     {
         // Fold Expressions (C++17)
-        ([&] 
-            {
-                std::cout << params << " - ";
-            }()
-        , ...);
+        ([&]
+         { std::cout << params << " - "; }(),
+         ...);
 
         std::cout << std::endl;
     }
 };
 
+// Can I have types after the parameter pack?
+// I can't, but I can have arguments in a function after a pack.
+template <class T, class... Arguments>
+class VariadicTemplatesExample2
+{
+public:
+    void MultipleTypes(Arguments &&...params, T &total)
+    {
+        T sum = 0;
+        ([&]
+         { sum += params; }(),
+         ...);
+        std::cout << sum << std::endl;
+        total = sum;
+    }
+};
+
 int main()
 {
-    VariadicTemplatesExample<int, double, int, float, short> vTemplate {1, 2.0, 3, 4.34f, short(5)};
-    VariadicTemplatesExample<double, std::string, int, short> vTemplate2 {1.11, "Hey not a number", 3, short(4)};
+    VariadicTemplatesExample<int, double, int, float, short> vTemplate{1, 2.0, 3, 4.34f, short(5)};
+    VariadicTemplatesExample<double, std::string, int, short> vTemplate2{1.11, "Hey not a number", 3, short(4)};
+
+    VariadicTemplatesExample2<int, int, int, int> vTemplateE1;
+    int total = 0;
+    vTemplateE1.MultipleTypes(1, 2, 3, total);
+    std::cout << "Total after function call : " << total << std::endl;
+
+    VariadicTemplatesExample2<double, double, double, double, double> vTemplateE2;
+    double total2 = 0.0;
+    vTemplateE2.MultipleTypes(1.12, 2.23, 3.34, 4.45, total2);
+    std::cout << "Total after function call : " << total2 << std::endl;
 
     return 0;
 }
