@@ -219,3 +219,11 @@ int main()
 
     return 0;
 }
+
+// Takeaways from the book
+//
+// The books suggests a similar approach, however, instead of passing the array size as 
+// parameter, it scans the array counting whitespaces and adds 2 to each whitespace to the
+// word size, this will change our algorithm from O(N) to O(2N), which doesn't affect much.
+// Besides that, the approach is very similar, and this is only one suggested by the book.
+//
