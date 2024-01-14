@@ -191,3 +191,22 @@ int main()
     }
     return 0;
 }
+
+// Takeaways from the book
+//
+// Like in many questions, we should confirm some details with our interviewe. We should understand
+// if the permutation comparison is case sensitive. That is: God a permutation of dog? Additionally,
+// we should ask if whitespace is significant. We will assume for this problem that the comparison
+// is case sensitive and whitespace is significant. So, "god    " is different from "dog".
+//
+// Observe first that strings of different lengths cannot be permutations of each other.
+//
+// There are 2 possible solutions suggested by the book, we used a modified version of the second.
+// According to the book, we could sort the strings and compare, in our test we discarted this
+// option because sorting would take O(n log(n)) and our algorithm endup being O(N), which is
+// preferable. Their argument is that this solution may be clear and easier to understand.
+//
+// As an alternative, the book suggests counting the characters occurency in the strings, the
+// difference with our solution is that they choose to use arrays instead of maps, they done this
+// assuming the ASCII character set, so this could save space, and stated that during the interview
+// you should always check with your intervier about the size of the character set.
