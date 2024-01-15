@@ -214,4 +214,22 @@ int main()
 
 // Takeaways from the book
 //
-// 
+// The book use 3 different approachs, all of them are O(N) and follow the same logic as ours,
+// however, we didn't cover one of them here on our test. Instead of using a map, and counting the
+// occurencies of each character, the books suggests to use an integer and "flip" its bits everytime
+// it hits a char (cast to int), the way to compare in the end is what is interesting here,
+// To check if we have no odds occurencies is simple, equals the integer to 0, to check if it
+// has exactly one bit set, subtract 1 bit from the value, and then AND it with the original
+// value, if it has only one 1 set, it will result in zero.
+//
+// A better explanation took from the book:
+// Picture an integer like 00010000. We could of course shift the integer repeatedly to check
+// that there's only a single 1. Alternatively, if we subtract 1 from the number, we'll get 
+// 00001111. What's notable about this is that there is no overlap between the number 
+// (as opposed to say 0010100, which, when we subtract 1 from, we get 00100111).
+// So, we can check to see that a number has exactly one 1 because if we subtract 1
+// from ir and then AND it with the new numeber, we should get 0.
+//
+// 00010000 - 1 = 00001111
+// 00010000 & 00001111 = 0
+//
