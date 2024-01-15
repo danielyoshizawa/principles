@@ -63,10 +63,10 @@
 //     simple algorithm that is more direct towards the solution.
 //
 //     Raw brute force algorithm
-//     1. Generate all permutations -> O(N^2)
+//     1. Generate all permutations -> O(N!)
 //     2. Check if any is a palindrome -> O(N^2) -> probably, I will not verify
 //
-//     Complexity : O(N^2)
+//     Complexity : O(N!)
 //
 //     Alternative algorithm
 //     1. Sort the string
@@ -211,3 +211,7 @@ int main()
     }
     return 0;
 }
+
+// Takeaways from the book
+//
+// 
