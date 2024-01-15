@@ -301,3 +301,14 @@ int main()
 
     return 0;
 }
+
+// Takeaways from the book
+//
+// The book suggest two approachs, one will split the concepts, the other merge them,
+// the first one will treat replacement and insertion/removal in different functions,
+// which leads to clear code, however, with some duplication, the second approach
+// merges both, creating a single function to handle all cases.
+// We end up with a solution pretty similar to the book, which is only a refactor away 
+// to be the same. On the thought process, we also follow the same approach, of course
+// the book was reviewed and their explanation is much clear than mine, but both are
+// on the same lines.
