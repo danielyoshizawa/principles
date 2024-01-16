@@ -80,7 +80,7 @@
 //     8. Compare input and output sizes
 //     9. Return the smaller
 //
-//     Complexity : O(N)
+//     Complexity : O(N^2)
 //
 //     Note: To be honest, the previous step shouldn't be called brute force solution, I'd call it
 //     first thing that comes to mind, because it could not be the best solution yet but doesn't
@@ -88,9 +88,33 @@
 //     to understand why they say to think in a brute force algorithm first.
 //     Getting back to the optimization!
 //
-// 4 - Well, nothing comes to mind
+//     Note2: I made a mistake here, I assumed that string concatenation was constant in time,
+//            however, the book mention that it's O(N), which is correct, so my algorith was not
+//            optimized at all, I'll keep previous comments and code, to keep it as a reminder.
 //
-// 5 - Pretty straight forward.
+// 4 - Well, nothing comes to mind.
+//     After checking the book solution I found out that our algorithm is not optimal, I mistakenly
+//     assumed that string concatenation would be constant, well, it's not.
+//     The book suggests using a StringBuilder, which is a Java thing, I'll create my own.
+//
+//     Optimized algorithm
+//     1. Loop throug the string
+//     2. Get the n-th letter
+//     3. Compare with previous letter
+//     4. If different, 
+//     4.1 Add previous letter and count to output StringBuilder (if not empty)
+//     4.2 Set count to zero
+//     4.3 Set previous to current letter
+//     5. Count++
+//     6. After the loop
+//     7. Add previous letter and count to output StringBuilder
+//     8. Build the string
+//     9. Compare input and output sizes
+//     10. Return the smaller
+//
+//     Complexity : O(N + k)
+//     
+// 5 - Pretty straight forward. (Not Really)
 //
 // 6 - Let's go!
 //
@@ -109,6 +133,7 @@
 #include <string>
 #include <vector>
 
+// First algorithm, 
 std::string Compress(const std::string & word)
 {
     int count {0};
@@ -124,7 +149,7 @@ std::string Compress(const std::string & word)
         if (w != previous)
         {
             // 4.1 Add previous letter and count to output string (if not empty)
-            out += count ? std::string((previous + std::to_string(count))) : "";
+            out += count ? std::string((previous + std::to_string(count))) : ""; // O(N) complexity
             // 4.2 Set count to zero
             count = 0;
             // 4.3 Set previous to current letter
@@ -141,6 +166,60 @@ std::string Compress(const std::string & word)
     return (out.length() <= word.length() ? out : word);
 }
 
+class StringBuilder
+{
+private:
+    std::vector<std::string> in;
+public:
+    void operator+=(const std::string& word)
+    {
+        in.push_back(word); // Complexity : Amortized constant
+    }
+    std::string toString()
+    {
+        std::string out{};
+        for (auto w : in)
+        {
+            out += w;
+        }
+        return out;
+    }
+};
+
+std::string CompressWithStringBuilder(const std::string & word)
+{
+    int count {0};
+    char previous {};
+    StringBuilder out {};
+
+    // 1. Loop throug the string
+    // 2. Get the n-th letter
+    for (auto w : word)
+    {
+        // 3. Compare with previous letter
+        // 4. If different,
+        if (w != previous)
+        {
+            // 4.1 Add previous letter and count to output StringBuilder (if not empty)
+            out += (count ? std::string((previous + std::to_string(count))) : "");
+            // 4.2 Set count to zero
+            count = 0;
+            // 4.3 Set previous to current letter
+            previous = w;
+        }
+        // 5. Count++
+        ++count;
+    }
+    // 6. After the loop
+    // 7. Add previous letter and count to output StringBuilder
+    out += (count ? std::string((previous + std::to_string(count))) : "");
+    // 8. Build the string
+    std::string output_string { out.toString() };
+    // 9. Compare input and output sizes
+    // 10. Return the smaller
+    return output_string.length() <= word.length() ? output_string : word;
+}
+
 int main()
 {
     std::vector<std::string> words {"aaabbbccc", "abc", "AAAbbBBCccc", "abbbbb", "", "a", "ab", "aa", "aaa", "abcdefghij", "aaaaaaaaaaaaaaaaaaaaaaaaaaaa"};
@@ -150,5 +229,21 @@ int main()
         std::cout << "The compression of \"" << word << "\" is \"" << Compress(word) << "\"" << std::endl;
     }
 
+    for (auto word : words)
+    {
+        std::cout << "The compression using string builder of \"" << word << "\" is \"" << CompressWithStringBuilder(word) << "\"" << std::endl;
+    }
+
     return 0;
 }
+
+// Takeaways from the book
+//
+// I did a mistake here, the book points out that a string concatenation is O(N), which will make
+// my algorithm O(p + N^2), or O(N^2), I went straight to the solution without thinking about this
+// particular operation, the solution proposed is to use a StringBuilder, which I assume is a 
+// Java thing, I will build my own to fix this problem.
+// Another thing pointed by the book is that we can evaluate the string firts to check it's final
+// size, and if the compressed version is longer, we can avoid running the compress. This will add
+// a new loop to the equation, making the complexity go to O(2N) using the string builder.
+// I'll not implement this version.
