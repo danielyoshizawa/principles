@@ -36,6 +36,7 @@
 // I'll try to add more of them as I go, for now I'll keep the reference link here and move on.
 //
 // https://curl.se/libcurl/c/curl_easy_setopt.html
+// https://curl.se/libcurl/c/easy_setopt_options.html
 //
 // CURLOPT_VERBOSE - Display verbose information.
 // CURLOPT_HEADER - Include the header in the body output.
