@@ -1,0 +1,28 @@
+{
+    "ticker": {
+        "base": "BTC",
+        "target": "USD",
+        "price": "443.7807865468",
+        "volume": "31720.1493969300",
+        "change": "Infinity",
+        "markets": [
+            {
+                "market": "bitfinex",
+                "price": "447.5000000000",
+                "volume": "10559.5293639000"
+            },
+            {
+                "market": "bitstamp",
+                "price": "448.5400000000",
+                "volume": "11628.2880079300"
+            },
+            {
+                "market": "btce",
+                "price": "432.8900000000",
+                "volume": "8561.0563600000"
+            }
+        ]
+    },
+    "timestamp": 1399490941,
+    "timestampstr": "1399490941"
+}
